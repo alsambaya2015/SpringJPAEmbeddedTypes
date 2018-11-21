@@ -4,6 +4,9 @@ package com.examplespringjpa.springjpa;
 import com.examplespringjpa.springjpa.model.Address;
 import com.examplespringjpa.springjpa.model.Name;
 import com.examplespringjpa.springjpa.model.User;
+import com.examplespringjpa.springjpa.model.CompDetails;
+import com.examplespringjpa.springjpa.model.Company;
+import com.examplespringjpa.springjpa.repository.CompRepository;
 import com.examplespringjpa.springjpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +21,9 @@ public class SpringjpaApplication implements CommandLineRunner {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private CompRepository comRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringjpaApplication.class, args);
@@ -34,6 +40,16 @@ public class SpringjpaApplication implements CommandLineRunner {
 		User user = new User(name, "example@gmail.com", address);
 
 		userRepository.save(user);
+
+		comRepository.deleteAllInBatch();
+
+		CompDetails compDetail = new CompDetails( "Performance Auto Group", "Honda", "Selling auto");
+		Address cpAddress = new Address("1", "Derby Road", "Brampton", "Ontario", "Canada", "L5RT5T");
+		Company company = new Company( compDetail, cpAddress);
+
+		comRepository.save(company);
+
+
 	}
 
 
